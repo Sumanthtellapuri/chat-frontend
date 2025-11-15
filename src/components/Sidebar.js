@@ -6,16 +6,20 @@ export default function Sidebar() {
   const [sessions, setSessions] = useState([]);
   const navigate = useNavigate();
 
+  const API = "https://chat-backend-llfk.onrender.com";
+
   useEffect(() => {
-    fetch("https://chat-backend-llfk.onrender.com/api/sessions")
+    fetch(`${API}/api/sessions`)
       .then((res) => res.json())
       .then((data) => setSessions(data));
   }, []);
 
   const createChat = () => {
-    fetch("https://chat-backend-llfk.onrender.com/api/new-chat")
+    fetch(`${API}/api/new-chat`)
       .then((res) => res.json())
-      .then((data) => navigate(`/chat/${data.sessionId || data.id}`));
+      .then((data) => {
+        navigate(`/chat/${data.sessionId}`);   // ✅ FIXED
+      });
   };
 
   return (
@@ -29,7 +33,7 @@ export default function Sidebar() {
           borderRadius: "8px",
           background: "var(--bubble-user)",
           color: "#fff",
-          fontWeight: "bold"
+          fontWeight: "bold",
         }}
       >
         + New Chat
@@ -50,7 +54,7 @@ export default function Sidebar() {
               background: "var(--bubble-bot)",
               color: "var(--text)",
               textAlign: "left",
-              border: "none"
+              border: "none",
             }}
           >
             {s.title}
@@ -64,3 +68,4 @@ export default function Sidebar() {
     </div>
   );
 }
+    

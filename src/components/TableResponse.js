@@ -1,9 +1,6 @@
-// src/components/TableResponse.js
-
 import React from "react";
 
 export default function TableResponse({ data }) {
-  // If data is missing, empty, or not an array → don't render anything
   if (!data || !Array.isArray(data) || data.length === 0) {
     return null;
   }
@@ -18,7 +15,7 @@ export default function TableResponse({ data }) {
           background: "var(--bubble-bot)",
           color: "var(--text)",
           borderRadius: "8px",
-          overflow: "hidden",
+          overflow: "hidden"
         }}
       >
         <thead>
@@ -29,7 +26,7 @@ export default function TableResponse({ data }) {
                 style={{
                   borderBottom: "1px solid #ccc",
                   padding: "10px",
-                  textAlign: "left",
+                  textAlign: "left"
                 }}
               >
                 {key.toUpperCase()}
@@ -46,7 +43,7 @@ export default function TableResponse({ data }) {
                   key={i}
                   style={{
                     borderBottom: "1px solid #eee",
-                    padding: "10px",
+                    padding: "10px"
                   }}
                 >
                   {value}
