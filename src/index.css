@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* optional reset */
+body {
+  @apply bg-white text-gray-900;
+}
+/* Light Theme */
+body[data-theme="light"] {
+  --bg: #f5f5f5;
+  --text: #111;
+  --card: #ffffff;
+  --bubble-user: #4b83ff;
+  --bubble-bot: #e5e5e5;
+}
+
+/* Dark Theme */
+body[data-theme="dark"] {
+  --bg: #0f172a;
+  --text: #e2e8f0;
+  --card: #1e293b;
+  --bubble-user: #1d4ed8;
+  --bubble-bot: #334155;
+}
+
+/* Apply theme variables globally */
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.25s ease-in-out;
+}
+/* ----- GLOBAL RESET ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* ----- THEME VARIABLES (Light + Dark) ----- */
+:root[data-theme="light"] {
+  --bg: #f5f5f5;
+  --text: #111;
+  --card: #ffffff;
+  --border: #d0d0d0;
+  --bubble-user: #0a84ff;
+  --bubble-bot: #e5e7eb;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f172a;
+  --text: #e2e8f0;
+  --card: #1e293b;
+  --border: #334155;
+  --bubble-user: #2563eb;
+  --bubble-bot: #334155;
+}
+
+/* ----- BODY ----- */
+body {
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* ----- LAYOUT ----- */
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* ----- SIDEBAR ----- */
+.sidebar {
+  width: 260px;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.sidebar button {
+  cursor: pointer;
+  border: none;
+}
+
+/* ----- CHAT AREA ----- */
+.chat-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Chat messages container */
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 80px;
+}
+
+/* User bubble */
+.msg-user {
+  align-self: flex-end;
+  background: var(--bubble-user);
+  color: white;
+  padding: 12px 16px;
+  max-width: 60%;
+  border-radius: 16px 16px 4px 16px;
+  font-size: 15px;
+}
+
+/* Bot bubble */
+.msg-bot {
+  align-self: flex-start;
+  background: var(--bubble-bot);
+  color: var(--text);
+  padding: 12px 16px;
+  max-width: 60%;
+  border-radius: 16px 16px 16px 4px;
+  font-size: 15px;
+}
+
+/* ----- INPUT BAR ----- */
+.input-bar {
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 260px);
+  background: var(--card);
+  padding: 12px;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.input-bar input {
+  flex: 1;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.input-bar button {
+  padding: 12px 20px;
+  background: var(--bubble-user);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* Typing bubble */
+.typing-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bubble-bot);
+  color: var(--text);
+  padding: 12px 16px;
+  max-width: 40%;
+  border-radius: 16px 16px 16px 4px;
+}
+
+/* Typing dots animation */
+.typing-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.typing-dots span {
+  width: 8px;
+  height: 8px;
+  background: var(--text);
+  border-radius: 50%;
+  animation: blink 1.2s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
