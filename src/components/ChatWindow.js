@@ -4,15 +4,20 @@ import TableResponse from "./TableResponse";
 
 export default function ChatWindow() {
   const { sessionId } = useParams();
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([]);   // must be an array
   const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false); // 👈 NEW
+  const [isTyping, setIsTyping] = useState(false);
+
+  const API = "https://chat-backend-llfk.onrender.com";
 
   // Load conversation history
   useEffect(() => {
-    fetch(`http://localhost:5000/api/session/${sessionId}`)
+    fetch(`${API}/api/session/${sessionId}`)
       .then((res) => res.json())
-      .then((data) => setHistory(data))
+      .then((data) => {
+        // Backend returns: { history: [...] }
+        setHistory(data.history || []);  
+      })
       .catch((err) => console.log("Error loading session:", err));
   }, [sessionId]);
 
@@ -20,16 +25,14 @@ export default function ChatWindow() {
   const sendMessage = () => {
     if (!input.trim()) return;
 
-    // Add user's message to UI instantly
     const userMsg = { sender: "user", text: input };
     setHistory((prev) => [...prev, userMsg]);
     setInput("");
 
-    // Show typing animation
     setIsTyping(true);
 
-    // Backend request
-    fetch(`http://localhost:5000/api/chat/${sessionId}`, {
+    // Send to backend
+    fetch(`${API}/api/chat/${sessionId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question: input })
@@ -42,10 +45,7 @@ export default function ChatWindow() {
           table: data.table
         };
 
-        // Add bot message to UI
         setHistory((prev) => [...prev, botMsg]);
-
-        // Stop typing animation
         setIsTyping(false);
       })
       .catch((err) => {
@@ -59,7 +59,6 @@ export default function ChatWindow() {
       <h2 style={{ marginBottom: "10px" }}>Conversation</h2>
       <p style={{ marginBottom: "20px" }}>Session: {sessionId}</p>
 
-      {/* Chat message list */}
       <div className="message-list">
         {history.map((msg, index) => (
           <div
@@ -68,12 +67,12 @@ export default function ChatWindow() {
           >
             {msg.text}
 
-            {/* If bot sent a table */}
+            {/* Bot table response */}
             {msg.table && <TableResponse data={msg.table} />}
           </div>
         ))}
 
-        {/* TYPING ANIMATION */}
+        {/* Typing animation */}
         {isTyping && (
           <div className="msg-bot typing-bubble">
             <span>Assistant is typing</span>
@@ -84,7 +83,6 @@ export default function ChatWindow() {
         )}
       </div>
 
-      {/* Input Bar */}
       <div className="input-bar">
         <input
           value={input}

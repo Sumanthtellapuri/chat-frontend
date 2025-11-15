@@ -7,15 +7,15 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/sessions")
+    fetch("https://chat-backend-llfk.onrender.com/api/sessions")
       .then((res) => res.json())
       .then((data) => setSessions(data));
   }, []);
 
   const createChat = () => {
-    fetch("http://localhost:5000/api/new-chat")
+    fetch("https://chat-backend-llfk.onrender.com/api/new-chat")
       .then((res) => res.json())
-      .then((data) => navigate(`/chat/${data.sessionId}`));
+      .then((data) => navigate(`/chat/${data.sessionId || data.id}`));
   };
 
   return (

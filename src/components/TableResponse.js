@@ -2,9 +2,9 @@
 
 import React from "react";
 
-export default function TableResponse({ table }) {
-  // If table is missing, empty, or not an array → don't render anything
-  if (!table || !Array.isArray(table) || table.length === 0) {
+export default function TableResponse({ data }) {
+  // If data is missing, empty, or not an array → don't render anything
+  if (!data || !Array.isArray(data) || data.length === 0) {
     return null;
   }
 
@@ -23,7 +23,7 @@ export default function TableResponse({ table }) {
       >
         <thead>
           <tr>
-            {Object.keys(table[0]).map((key) => (
+            {Object.keys(data[0]).map((key) => (
               <th
                 key={key}
                 style={{
@@ -39,7 +39,7 @@ export default function TableResponse({ table }) {
         </thead>
 
         <tbody>
-          {table.map((row, index) => (
+          {data.map((row, index) => (
             <tr key={index}>
               {Object.values(row).map((value, i) => (
                 <td
